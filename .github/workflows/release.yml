@@ -22,6 +22,7 @@ jobs:
           registry-url: https://registry.npmjs.org
       - run: npm ci
       - run: npm run typecheck
+      - run: npm test
       - name: Create release PR or publish
         uses: changesets/action@v1.9.0
         with:

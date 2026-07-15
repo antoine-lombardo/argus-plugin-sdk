@@ -73,11 +73,16 @@ the `AbortSignal` and the deadlines in `DEFAULT_TIMEOUTS`.
 ```bash
 npm install
 npm run typecheck   # tsc --noEmit over src + test (compile-time contract check)
+npm test            # vitest: runtime manifest-schema validation
 npm run build       # emit dist/ (JS + .d.ts)
 ```
 
-`test/fixtures/sample-plugin.ts` is a fixture that must type-check against
-`ArgusPlugin`; a breaking contract change fails `typecheck`.
+Two layers of contract tests:
+
+- **Compile-time:** `test/fixtures/sample-plugin.ts` must type-check against
+  `ArgusPlugin`; a breaking contract change fails `typecheck`.
+- **Runtime:** `test/manifest.test.ts` validates a sample manifest against
+  `manifestJsonSchema` with Ajv (accepts valid, rejects malformed).
 
 ## Releasing
 

@@ -22,11 +22,19 @@ and [ADR 0001](https://github.com/antoine-lombardo/argus/blob/main/docs/adr/0001
 ```bash
 npm ci            # install (CI-exact); use npm install when changing deps
 npm run typecheck # tsc --noEmit over src + test (compile-time contract check)
+npm test          # vitest: runtime manifest-schema validation (Ajv)
 npm run build     # emit dist/ (JS + .d.ts)
 ```
 
-`test/fixtures/sample-plugin.ts` must always type-check against `ArgusPlugin`;
-it is the compile-time contract test. If you change the contract, update it.
+Two contract tests, keep both green when changing the contract:
+
+- `test/fixtures/sample-plugin.ts` must type-check against `ArgusPlugin`
+  (compile-time). Update it when the interface changes.
+- `test/manifest.test.ts` validates a sample manifest against
+  `manifestJsonSchema` at runtime. Update it when the manifest schema changes.
+
+Note: Ajv is only importable via its named export under this repo's strict
+`verbatimModuleSyntax` config — `import { Ajv2020 } from "ajv/dist/2020.js"`.
 
 ## Releasing / publishing a new version — READ THIS
 

@@ -1,0 +1,49 @@
+{
+  "name": "@argus-tv/plugin-sdk",
+  "version": "0.0.0",
+  "description": "The Argus plugin contract. TypeScript types, manifest schema, and contract tests that every provider plugin implements.",
+  "license": "MIT",
+  "type": "module",
+  "types": "./dist/index.d.ts",
+  "main": "./dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public",
+    "tag": "next",
+    "provenance": true
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "clean": "rm -rf dist",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "npm run build && changeset publish"
+  },
+  "keywords": [
+    "argus",
+    "plugin",
+    "sdk",
+    "streaming"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antoine-lombardo/argus-plugin-sdk.git"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.27.0",
+    "typescript": "^5.5.0"
+  }
+}

@@ -1,6 +1,6 @@
 {
   "name": "@argus-tv/plugin-sdk",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "The Argus plugin contract. TypeScript types, manifest schema, and contract tests that every provider plugin implements.",
   "license": "MIT",
   "type": "module",

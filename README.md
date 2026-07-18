@@ -9,9 +9,9 @@ Argus plugins run **in-process** and expose a **TypeScript interface**
 A plugin bundle default-exports an object implementing `ArgusPlugin`; the host
 holds a typed reference and calls its methods directly.
 
-> Status: **Phase 1 — contract skeleton.** Types-first; the API version is `0.1`
-> and may change until a host consumes it end-to-end. Releases are `0.x` and
-> published under the **`next`** npm dist-tag until the contract stabilizes.
+> Status: **Phase 3 — consumed by the host kernel.** API version `0.1`.
+> Releases are `0.x` under the **`next`** npm dist-tag until the contract
+> stabilizes.
 
 ## Install
 
@@ -19,22 +19,27 @@ holds a typed reference and calls its methods directly.
 npm install --save-dev @argus-tv/plugin-sdk@next
 ```
 
-The SDK provides **types only** — plugins depend on it at build time and bundle
-their own runtime dependencies (no runtime SDK coupling).
+The SDK is **types-first** plus a tiny shared runtime (`ArgusError`,
+`definePlugin`, `mediaId`). Plugins depend on it at **build** time and
+**bundle** any SDK runtime they import into their `index.js`. Host I/O is
+**not** in this package — it is injected as `HostContext` by the host.
+
+> Host code must use `isArgusError` (duck-typing). Do not use `instanceof
+> ArgusError` across plugin bundle boundaries — each plugin inlines its own
+> class copy.
 
 ## What's in here
 
-| Area | Types |
-|------|-------|
-| Plugin contract | `ArgusPlugin`, `PluginModule` |
+| Area | Exports |
+|------|---------|
+| Plugin contract | `ArgusPlugin`, `PluginModule`, `definePlugin` |
 | Host services | `HostContext`, `HttpClient`, `SecureStore`, `KeyValueStore`, `Logger`, `SettingsAccess` |
-| Manifest | `PluginManifest`, `manifestJsonSchema` |
-| Media model | `MediaItem`, `MediaDetails`, `MediaId`, `Season`, `Episode`, `LiveEvent`, `Artwork`, `Person` |
+| Manifest | `PluginManifest` (includes required `version` + `build`), `manifestJsonSchema` |
+| Media model | `MediaItem`, `MediaDetails`, `MediaId`, `mediaId`, … |
 | Playback | `StreamDescriptor`, `DrmInfo`, `Subtitle` |
 | Discovery | `SearchOptions`, `Row` |
-| Auth | `AuthState`, `LoginFlow` |
-| Library | `Progress` |
-| Errors | `ArgusError`, `ArgusErrorCode`, `isArgusError` |
+| Auth / library | `AuthState`, `LoginFlow`, `Progress` |
+| Errors | `ArgusError`, `isArgusError`, `isExpectedArgusError` |
 | Constants | `API_VERSION`, `DEFAULT_TIMEOUTS` |
 
 ## Minimal plugin shape

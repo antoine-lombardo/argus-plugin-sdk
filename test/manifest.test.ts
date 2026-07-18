@@ -45,6 +45,14 @@ describe("manifestJsonSchema", () => {
     expect(validate(invalid((m) => (m.version = "v1")))).toBe(false);
   });
 
+  it("rejects a build below 1", () => {
+    expect(validate(invalid((m) => (m.build = 0)))).toBe(false);
+  });
+
+  it("rejects a missing build", () => {
+    expect(validate(invalid((m) => delete m.build))).toBe(false);
+  });
+
   it("rejects an empty platforms array", () => {
     expect(validate(invalid((m) => (m.platforms = [])))).toBe(false);
   });

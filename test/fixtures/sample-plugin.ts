@@ -18,6 +18,7 @@ export const sampleManifest: PluginManifest = {
   id: "com.example.sample",
   name: "Sample Provider",
   version: "0.1.0",
+  build: 1,
   apiVersion: "0.1",
   entry: "index.js",
   capabilities: ["search", "catalog", "vod"],

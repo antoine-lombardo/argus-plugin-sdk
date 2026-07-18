@@ -36,7 +36,37 @@ export class ArgusError extends Error {
   }
 }
 
-/** Narrowing helper for host code and tests. */
+const ARGUS_ERROR_CODES: ReadonlySet<string> = new Set([
+  "AUTH_REQUIRED",
+  "GEO_BLOCKED",
+  "NOT_AVAILABLE",
+  "DRM_UNSUPPORTED",
+  "RATE_LIMITED",
+  "PLUGIN_ERROR",
+]);
+
+/**
+ * Narrowing helper for host code and tests.
+ *
+ * Uses duck-typing, not `instanceof`: plugins bundle their own copy of
+ * `ArgusError`, so cross-bundle `instanceof` is always false.
+ */
 export function isArgusError(value: unknown): value is ArgusError {
-  return value instanceof ArgusError;
+  if (value instanceof ArgusError) return true;
+  if (typeof value !== "object" || value === null) return false;
+  const err = value as { name?: unknown; code?: unknown };
+  return err.name === "ArgusError" && typeof err.code === "string" && ARGUS_ERROR_CODES.has(err.code);
+}
+
+/** Expected UX signals — do not trip a host circuit breaker. */
+export const EXPECTED_ARGUS_ERROR_CODES: ReadonlySet<ArgusErrorCode> = new Set([
+  "AUTH_REQUIRED",
+  "GEO_BLOCKED",
+  "NOT_AVAILABLE",
+  "RATE_LIMITED",
+  "DRM_UNSUPPORTED",
+]);
+
+export function isExpectedArgusError(value: unknown): boolean {
+  return isArgusError(value) && EXPECTED_ARGUS_ERROR_CODES.has(value.code);
 }

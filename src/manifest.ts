@@ -11,6 +11,11 @@ export interface PluginManifest {
   name: string;
   /** Plugin's own semver. */
   version: string;
+  /**
+   * Monotonic build within `version`. Host update checks use (version, build):
+   * higher semver wins, or same semver with higher build.
+   */
+  build: number;
   /** Contract version the plugin targets (see `API_VERSION`). */
   apiVersion: string;
   /** Bundle entry file inside the artifact. */
@@ -50,6 +55,7 @@ export const manifestJsonSchema = {
     "id",
     "name",
     "version",
+    "build",
     "apiVersion",
     "entry",
     "capabilities",
@@ -60,6 +66,7 @@ export const manifestJsonSchema = {
     id: { type: "string", pattern: "^[a-z0-9]+(\\.[a-z0-9-]+)+$" },
     name: { type: "string", minLength: 1 },
     version: { type: "string", pattern: "^\\d+\\.\\d+\\.\\d+" },
+    build: { type: "integer", minimum: 1 },
     apiVersion: { type: "string", pattern: "^\\d+\\.\\d+$" },
     entry: { type: "string", minLength: 1 },
     capabilities: {

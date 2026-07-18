@@ -57,5 +57,12 @@ export { manifestJsonSchema } from "./manifest.js";
 
 export type { ArgusPlugin, PluginModule } from "./plugin.js";
 
-export { ArgusError, isArgusError } from "./errors.js";
+export {
+  ArgusError,
+  isArgusError,
+  isExpectedArgusError,
+  EXPECTED_ARGUS_ERROR_CODES,
+} from "./errors.js";
 export type { ArgusErrorCode, ArgusErrorOptions } from "./errors.js";
+
+export { definePlugin, mediaId } from "./helpers.js";

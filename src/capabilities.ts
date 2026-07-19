@@ -1,8 +1,15 @@
 /**
- * Contract version this SDK describes. A plugin's `manifest.apiVersion` is
- * checked against this by the host, which refuses incompatible majors.
+ * Contract version this SDK describes — **always** the package's major.minor
+ * (e.g. package `0.2.3` → `API_VERSION` `"0.2"`).
+ *
+ * - **minor** (on `0.x`) / **major** (on `1.x+`) = contract changed → bump this
+ *   with the package version.
+ * - **patch** = no contract change → leave `API_VERSION` unchanged.
+ *
+ * A plugin's `manifest.apiVersion` must equal this string; the host refuses
+ * anything else.
  */
-export const API_VERSION = "0.1" as const;
+export const API_VERSION = "0.2" as const;
 
 /**
  * Optional features a plugin can support. Declared in the manifest *and*

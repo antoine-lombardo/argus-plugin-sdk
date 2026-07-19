@@ -12,14 +12,14 @@ import type {
   PluginManifest,
   StreamDescriptor,
 } from "../../src/index.js";
-import { ArgusError } from "../../src/index.js";
+import { ArgusError, API_VERSION } from "../../src/index.js";
 
 export const sampleManifest: PluginManifest = {
   id: "com.example.sample",
   name: "Sample Provider",
   version: "0.1.0",
   build: 1,
-  apiVersion: "0.1",
+  apiVersion: API_VERSION,
   entry: "index.js",
   capabilities: ["search", "catalog", "vod"],
   permissions: ["network"],

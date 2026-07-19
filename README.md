@@ -9,14 +9,14 @@ Argus plugins run **in-process** and expose a **TypeScript interface**
 A plugin bundle default-exports an object implementing `ArgusPlugin`; the host
 holds a typed reference and calls its methods directly.
 
-> Status: **Phase 3 — consumed by the host kernel.** API version `0.1`.
-> Releases are `0.x` under the **`next`** npm dist-tag until the contract
-> stabilizes.
+> Status: **Phase 3 — consumed by the host kernel.** `API_VERSION` is the
+> package **major.minor** (currently `0.2`). Releases are `0.x` until the
+> contract stabilizes.
 
 ## Install
 
 ```bash
-npm install --save-dev @argus-tv/plugin-sdk@next
+npm install --save-dev @argus-tv/plugin-sdk@~0.2.0
 ```
 
 The SDK is **types-first** plus a tiny shared runtime (`ArgusError`,
@@ -46,13 +46,15 @@ The SDK is **types-first** plus a tiny shared runtime (`ArgusError`,
 
 ```ts
 import type { ArgusPlugin } from "@argus-tv/plugin-sdk";
+import { API_VERSION } from "@argus-tv/plugin-sdk";
 
 const plugin: ArgusPlugin = {
   manifest: {
     id: "com.example.provider",
     name: "Example Provider",
     version: "0.1.0",
-    apiVersion: "0.1",
+    build: 1,
+    apiVersion: API_VERSION,
     entry: "index.js",
     capabilities: ["search"],
     permissions: ["network"],

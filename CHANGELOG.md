@@ -1,5 +1,15 @@
 # @argus-tv/plugin-sdk
 
+## 0.2.0
+
+### Minor Changes
+
+- 88c5b7d: Require `build` (positive integer) on `PluginManifest` for version+build update identity.
+
+### Patch Changes
+
+- 88c5b7d: Duck-type `isArgusError` across plugin bundle boundaries; add `isExpectedArgusError`, `definePlugin`, and `mediaId` helpers.
+
 ## 0.1.1
 
 ### Patch Changes

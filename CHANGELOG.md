@@ -1,5 +1,11 @@
 # @argus-tv/plugin-sdk
 
+## 0.2.1
+
+### Patch Changes
+
+- 34a6482: Set API_VERSION to "0.2" to match package major.minor (was wrongly left at "0.1" in 0.2.0).
+
 ## 0.2.0
 
 ### Minor Changes
